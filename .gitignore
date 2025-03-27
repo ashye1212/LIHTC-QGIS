@@ -1,1 +1,10 @@
+# ===============================
+# .gitignore for LIHTC-QGIS
+# ===============================
+
 .DS_Store
+
+# === Raw data: DO NOT TRACK ===
+data/raw/
+
+#  Any files over 100MB should go in data/raw/ and not be added
