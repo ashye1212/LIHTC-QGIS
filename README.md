@@ -25,7 +25,7 @@ lihtc_qgis/
 │       └── test_0326.pgw           # Georeferencing for PNG
 ├── qgis/
 │   └── test_0326.qgz              # QGIS project file
-├── notes.md                       # Project notes
+├── README.md                       # Project notes
 └── .gitignore                     # Rules to avoid uploading large/unnecessary files
 ```
 ---
