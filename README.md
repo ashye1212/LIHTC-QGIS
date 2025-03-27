@@ -1,14 +1,16 @@
 # LIHTC-QGIS Prototype Mapping
+[@Lydia](https://github.com/ashye1212)
 
 This repository contains a QGIS-based prototype for exploring spatial sampling and scoring of potential **Low-Income Housing Tax Credit (LIHTC)** development areas across Metro Atlanta.
 
-(Mar 26)
-- The current version randomly samples points within five counties and assigns temporary values to simulate scoring outcomes. The goal is to evolve this prototype into a polished, interactive web map based on stakeholder feedback and real data.
+Updated by Mar 26
+- The current version randomly samples points within five counties and assigns temporary values to simulate scoring outcomes.
+- The goal is to evolve this prototype into a polished, interactive web map based on stakeholder feedback and real data.
 
 ---
 
 ## 📁 Project Structure
-
+```{bash}
 lihtc_qgis/
 ├── data/
 │   ├── processed/                  # Tracked: cleaned shapefiles (<100MB)
@@ -25,7 +27,7 @@ lihtc_qgis/
 │   └── test_0326.qgz              # QGIS project file
 ├── notes.md                       # Project notes
 └── .gitignore                     # Rules to avoid uploading large/unnecessary files
-
+```
 ---
 ##  Next Step: Toward Interactive Web Map  (March 27 -> )
 
@@ -44,8 +46,7 @@ This map prototype includes:
 > QGIS → Attribute Table → Field Calculator → Expression  
 ```qgis
 round(randf(0, 100))
-
-
+```
 ---
 ##  Design Feedback Requested(March 27)
 
@@ -76,24 +77,24 @@ I’d love your input on the following areas:
 
 ---
 ## Git Tracking Rules (For Developers)
-	•	Do not push anything under data/raw/
-	•	Use .gitignore to exclude large or temporary files
-	•	Check file size before pushing:
+- Do not push anything under data/raw/
+- Use .gitignore to exclude large or temporary files
+- Check file size before pushing:
 
+```{bash}
 find . -type f -size +90M -exec ls -lh {} \;
-
+```
 Update .gitignore as needed:
-
+```{bash}
 nano .gitignore
 git add .gitignore
 git commit -m "Update .gitignore"
 git push
-
+```
 ---
 📌 Reproducibility Example
-
-Algorithm Used: Random points in layer bounds
-Input: five_counties.gpkg
-Points: 30
-Execution Time: ~5.76 seconds
+- Algorithm Used: Random points in layer bounds
+- Input: five_counties.gpkg
+- Points: 30
+- Execution Time: ~5.76 seconds
 
