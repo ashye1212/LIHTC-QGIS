@@ -1,56 +1,99 @@
-# Project Documentation
+# LIHTC-QGIS Prototype Mapping
 
-## **Project Structure Overview**
-This repository contains data and scripts related to replicating scoring scoring indicators based on the 2024 QAP.
+This repository contains a QGIS-based prototype for exploring spatial sampling and scoring of potential **Low-Income Housing Tax Credit (LIHTC)** development areas across Metro Atlanta.
+
+(Mar 26)
+- The current version randomly samples points within five counties and assigns temporary values to simulate scoring outcomes. The goal is to evolve this prototype into a polished, interactive web map based on stakeholder feedback and real data.
+
+---
+
+## 📁 Project Structure
+
+lihtc_qgis/
+├── data/
+│   ├── processed/                  # Tracked: cleaned shapefiles (<100MB)
+│   │   ├── 30_random_points_0326.gpkg     # Randomly sampled test points
+│   │   └── five_counties_atl_0326.gpkg    # Processed five-county boundary
+│   └── raw/                        # Not tracked: raw shapefiles (>100MB)
+│       ├── tl_2023_us_county/
+│       └── tl_2024_13_tract/
+├── output/
+│   └── maps/
+│       ├── test_0326.png           # Exported visualization
+│       └── test_0326.pgw           # Georeferencing for PNG
+├── qgis/
+│   └── test_0326.qgz              # QGIS project file
+├── notes.md                       # Project notes
+└── .gitignore                     # Rules to avoid uploading large/unnecessary files
+
+---
+##  Next Step: Toward Interactive Web Map  (March 27 -> )
+
+We aim to eventually publish this as a web-based map for broader accessibility
+- Reference: https://doculy.ai/lihtc
+
+---
+##  🗺️ Prototype Overview (March 26)
+
+This map prototype includes:
+- **30 random points** generated within selected counties
+- **Random value assignment** to each point for test visualization
+- **Basic symbology** to differentiate values (gradients)
+
+### Sample Expression (Value Assignment):
+> QGIS → Attribute Table → Field Calculator → Expression  
+```qgis
+round(randf(0, 100))
 
 
 ---
-## **1️. Data Folder (`data/`)**
-This folder contains all datasets used in the project. It is divided into three main subfolders:
+##  Design Feedback Requested(March 27)
 
-### **`data/raw/`**
-Contains raw, unprocessed data files.
-- **`scoring_indicators/2024stablecommunities.xlsx`**: The original Excel file pulled from the DCA website containing data on poverty level, environmental health indices, job proximity indices, median income, and transit access indices used for the 2024 applications.
-- **`shapefiles/tl_2024_13_tract/`**: Contains geographic shapefiles for census tracts. These files represent spatial data and are used for mapping and geospatial analysis.
+Hi Team, 
+I’m sharing a prototype visualization created in QGIS as part of our effort to explore spatial sampling of potential LIHTC development areas. This version randomly samples points within five Metro Atlanta counties and assigns each point a random value (for now) to simulate location-based scoring potential. The styling is basic but intended as a starting point for feedback.
 
-### **`data/preprocessed/`**: contains data put into csv format for further processing and analysis. 
-- **`scoring_indicators/`**: contains prepocessed data related to calculating scores. 
-  - `above_poverty_level_2024.csv`: Contains data on the percentage of the population above the poverty level for each census tract.  
-  - `data_sources_2024.csv`: Lists sources for all indicators used in the analysis.  
-  - `environmental_health_index_2024.csv`: Environmental health scores for each census tracts.  
-  - `jobs_proximity_index_2024.csv`: Measures how close a census tract is to job opportunities for each tract. 
-  - `median_income_2024.csv`: Median income data for each census tract. 
-  - `percentiles_2024.csv`: Contains percentile rankings for various indicators.  
-  - `transit_access_index_2024.csv`: Measures access to public transportation for each census tract.  
+I’d love your input on the following areas:
 
-### **`data/processed/`**: Contains final processed datasets ready for use in analysis.
-- **`scoring_indicators/`**: Contains final processed datasets to be used to calculate scores for each criteria. 
-- **`stable_communities_2024_processed.csv`**  
-  - The final dataset containing the processed stable communities scoring indicators.
----
+1. Reference + Examples:
+    - Are there strong examples (internal or external) of map visualizations—either static or interactive—we should use as references?
+    - Any QAP-related visualizations you’ve seen that were especially effective?
+2. Purpose & Audience
+    - Who is the intended audience for this map?
+    - What insight or message do we want the reader to walk away with?
+3. Deliverables:
+    - What output format is ideal for future delivery? Static maps (PDF), QGIS packages, or interactive (e.g., web map or dashboard)?
+4. Information content: 
+    - Are there key **map elements** missing that we should include (e.g., basemap, legend, annotation)?
+    - Should we show raw scores, categories (e.g., low/med/high), or just visual gradients?
+5. Spatial Design
+    1. Scope & Framing
+        - Should we zoom in closer on priority census tracts, or show all of Metro Atlanta?
+        - Would it help to include a state-level outline or context (e.g., showing Georgia boundary in gray)?
+        - Should the visualization include “known development zones” or past award overlays?
+    2.  **Symbology & Labeling**
+        1. format suggestions: color,  front choices?
 
-## **2. Scripts Folder (`scripts/`)**: Contains Jupyter Notebooks for running analyses and processing data.
-
-### **`scripts/desirable_undesirable_activities/`**
-- `desirable_undesirable_activities.ipynb` 
-  - Computes scores for desirable and undesirable activities using Google Places API.  
-  - Fetches nearby amenities and hazardous locations.
-
-### **`scripts/quality_education/`**
-- (Currently empty or for future quality education-related analysis.)
-
-### **🔹 `scripts/stable_communities/`**
-- `stable_communities.ipynb` 
-  - Main script for analyzing stable community scores.  
-  - Uses preprocessed data from `data/processed/scoring_indicators/`.  
-
-- `stable_communities_data_preprocess.ipynb` →  
-  - Cleans and prepares the raw data from `data/raw/scoring_indicators/2024stablecommunities.xlsx`.  
-  - Outputs the cleaned csvs to dataset to `data/preprocessed/scoring_indicators/`.
-  - Creates a merged data set with all scoring indicators, median values, and logic to compute the score for stable communities
-
-<!-- - `stable_communities_grid.ipynb` →  
-  - Generates a spatial grid of stable community scores across Georgia.  
-  - Uses geographic data from `data/raw/shapefiles/`. -->
 
 ---
+## Git Tracking Rules (For Developers)
+	•	Do not push anything under data/raw/
+	•	Use .gitignore to exclude large or temporary files
+	•	Check file size before pushing:
+
+find . -type f -size +90M -exec ls -lh {} \;
+
+Update .gitignore as needed:
+
+nano .gitignore
+git add .gitignore
+git commit -m "Update .gitignore"
+git push
+
+---
+📌 Reproducibility Example
+
+Algorithm Used: Random points in layer bounds
+Input: five_counties.gpkg
+Points: 30
+Execution Time: ~5.76 seconds
+
